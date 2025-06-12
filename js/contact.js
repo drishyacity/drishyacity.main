@@ -6,10 +6,8 @@
 (function() {
     'use strict';
 
-    // EmailJS Configuration
-    const EMAILJS_SERVICE_ID = 'service_drishyacity'; // You'll need to configure this
-    const EMAILJS_TEMPLATE_ID = 'template_drishyacity'; // You'll need to configure this
-    const EMAILJS_PUBLIC_KEY = 'your_emailjs_public_key'; // You'll need to configure this
+    // Formspree Configuration
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xwpboqdv';
 
     // DOM Elements
     const contactForm = document.getElementById('contact-form');
@@ -24,36 +22,9 @@
     function init() {
         if (!contactForm) return;
         
-        setupEmailJS();
         setupFormHandlers();
         setupFormValidation();
         setupFormEnhancements();
-    }
-
-    // Setup EmailJS
-    function setupEmailJS() {
-        // Initialize EmailJS
-        if (typeof emailjs !== 'undefined') {
-            emailjs.init(EMAILJS_PUBLIC_KEY);
-        } else {
-            // Load EmailJS dynamically
-            loadEmailJS().then(() => {
-                emailjs.init(EMAILJS_PUBLIC_KEY);
-            }).catch(error => {
-                console.error('Failed to load EmailJS:', error);
-                showFormMessage('Service temporarily unavailable. Please try again later.', 'error');
-            });
-        }
-    }
-
-    function loadEmailJS() {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-        });
     }
 
     // Setup Form Handlers
@@ -88,7 +59,7 @@
         
         try {
             setSubmittingState(true);
-            await sendEmail(formData);
+            await sendFormspreeEmail(formData);
             handleSubmissionSuccess();
         } catch (error) {
             handleSubmissionError(error);
@@ -97,50 +68,30 @@
         }
     }
 
-    // Send Email via EmailJS
-    function sendEmail(formData) {
-        // Fallback if EmailJS is not available
-        if (typeof emailjs === 'undefined') {
-            return sendEmailFallback(formData);
-        }
-
-        const templateParams = {
-            from_name: `${formData.firstName} ${formData.lastName}`,
-            from_email: formData.email,
-            company: formData.company || 'Not specified',
-            project_type: formData.projectType || 'Not specified',
-            budget: formData.budget || 'Not specified',
-            timeline: formData.timeline || 'Not specified',
-            message: formData.message,
-            to_email: 'drishyacity@gmail.com'
-        };
-
-        return emailjs.send(
-            EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_ID,
-            templateParams
-        );
-    }
-
-    // Fallback email sending method
-    function sendEmailFallback(formData) {
-        // Use FormSubmit as fallback
+    // Send Email via Formspree
+    function sendFormspreeEmail(formData) {
         const formSubmitData = new FormData();
         
-        formSubmitData.append('name', `${formData.firstName} ${formData.lastName}`);
+        formSubmitData.append('firstName', formData.firstName);
+        formSubmitData.append('lastName', formData.lastName);
         formSubmitData.append('email', formData.email);
-        formSubmitData.append('company', formData.company);
-        formSubmitData.append('project_type', formData.projectType);
-        formSubmitData.append('budget', formData.budget);
-        formSubmitData.append('timeline', formData.timeline);
+        formSubmitData.append('company', formData.company || '');
+        formSubmitData.append('projectType', formData.projectType || '');
+        formSubmitData.append('budget', formData.budget || '');
+        formSubmitData.append('timeline', formData.timeline || '');
         formSubmitData.append('message', formData.message);
-        formSubmitData.append('_subject', 'New Contact Form Submission - DrishyaCity');
-        formSubmitData.append('_next', window.location.href + '?submitted=true');
-        formSubmitData.append('_captcha', 'false');
 
-        return fetch('https://formsubmit.co/drishyacity@gmail.com', {
+        return fetch(FORMSPREE_ENDPOINT, {
             method: 'POST',
-            body: formSubmitData
+            body: formSubmitData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         });
     }
 
@@ -239,20 +190,15 @@
     function setSubmittingState(submitting) {
         isSubmitting = submitting;
         
-        const btnText = submitBtn.querySelector('.btn-text');
-        const btnLoading = submitBtn.querySelector('.btn-loading');
-        
         if (submitting) {
             submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
             submitBtn.classList.add('loading');
-            btnText.style.display = 'none';
-            btnLoading.style.display = 'flex';
             formInputs.forEach(input => input.disabled = true);
         } else {
             submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
             submitBtn.classList.remove('loading');
-            btnText.style.display = 'inline';
-            btnLoading.style.display = 'none';
             formInputs.forEach(input => input.disabled = false);
         }
     }
