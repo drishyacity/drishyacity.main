@@ -398,6 +398,16 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     animation: rotate 20s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-logo {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 .floating-element {
@@ -700,6 +710,16 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     animation: rotate 25s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-logo {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 .floating-shape {
