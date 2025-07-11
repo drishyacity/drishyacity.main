@@ -1,6 +1,6 @@
 ---
 title: Privacy Policy
-last_updated: 2025-07-11T10:04:58.087Z
+last_updated: 2025-07-11T10:06:14.975Z
 ---
 
 # Privacy Policy
