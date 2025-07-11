@@ -1,6 +1,6 @@
 ---
-title: "Privacy Policy"
-last_updated: "2024-01-01T00:00:00.000Z"
+title: Privacy Policy
+last_updated: 2025-07-11T10:04:58.087Z
 ---
 
 # Privacy Policy
