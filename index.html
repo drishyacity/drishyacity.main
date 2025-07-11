@@ -7,7 +7,7 @@
     <title>DrishyaCity | Graphic Design Portfolio</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="DrishyaCity - Premium graphic design portfolio by Viraj Singh. Calm. Creative. Professional. Professional branding and visual storytelling services.">
+    <meta name="description" content="DrishyaCity - Premium graphic design portfolio by Viraj Singh. Calm. Creative. Professional. Branding and visual storytelling services.">
     <meta name="keywords" content="graphic design, visual design, branding, logo design, portfolio, DrishyaCity, Viraj Singh">
     <meta name="author" content="Viraj Singh - DrishyaCity">
     
@@ -70,16 +70,16 @@
                         <a href="portfolio.html" class="nav-link">Portfolio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="contact.html" class="nav-link">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="faq.html" class="nav-link">FAQ</a>
-                    </li>
-                    <li class="nav-item">
                         <a href="services.html" class="nav-link">Services</a>
                     </li>
                     <li class="nav-item">
                         <a href="pricing.html" class="nav-link">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="faq.html" class="nav-link">FAQ</a>
                     </li>
                 </ul>
                 
@@ -265,16 +265,19 @@
                                 <li><a href="about.html" class="footer-link">About</a></li>
                                 <li><a href="portfolio.html" class="footer-link">Portfolio</a></li>
                                 <li><a href="contact.html" class="footer-link">Contact</a></li>
+                                <li><a href="pricing.html" class="footer-link">Pricing</a></li>
+                                <li><a href="faq.html" class="footer-link">FAQ</a></li>
+                                <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
                             </ul>
                         </div>
                         
                         <div class="footer-section">
                             <h4 class="footer-title">Services</h4>
                             <ul class="footer-list">
-                                <li><span class="footer-link">Calm</span></li>
-                                <li><span class="footer-link">Creative</span></li>
-                                <li><span class="footer-link">Professional</span></li>
-                                <li><span class="footer-link">Visual Storytelling</span></li>
+                                <li><span class="footer-link">Logo Design</span></li>
+                                <li><span class="footer-link">Brand Identity</span></li>
+                                <li><span class="footer-link">Social Media Design</span></li>
+                                <li><span class="footer-link">Print Design</span></li>
                             </ul>
                         </div>
                         
@@ -319,7 +322,23 @@
         </div>
     </footer>
 
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+    <script src="js/cms-content.js"></script>
+
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
 </body>
 </html>

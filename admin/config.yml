@@ -1,0 +1,220 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# Enable editorial workflow for content review
+publish_mode: editorial_workflow
+
+# Logo for the CMS interface
+logo_url: /drishyacity-logo.png
+
+collections:
+  # Site Settings
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - file: "content/settings/site.md"
+        label: "Site Information"
+        name: "site"
+        fields:
+          - {label: "Site Title", name: "title", widget: "string"}
+          - {label: "Site Description", name: "description", widget: "text"}
+          - {label: "Site URL", name: "url", widget: "string"}
+          - {label: "Logo", name: "logo", widget: "image"}
+          - {label: "Favicon", name: "favicon", widget: "image"}
+          - {label: "Author", name: "author", widget: "string"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "WhatsApp", name: "whatsapp", widget: "string"}
+          - label: "Social Media"
+            name: "social"
+            widget: "object"
+            fields:
+              - {label: "Instagram", name: "instagram", widget: "string"}
+              - {label: "YouTube", name: "youtube", widget: "string"}
+              - {label: "Facebook", name: "facebook", widget: "string"}
+              - {label: "Twitter/X", name: "twitter", widget: "string"}
+
+  # Pages
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "content/pages/home.md"
+        label: "Home Page"
+        name: "home"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Tagline", name: "hero_tagline", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "Hero Logo", name: "hero_logo", widget: "image"}
+          - label: "Featured Work"
+            name: "featured_work"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "string"}
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Alt Text", name: "alt", widget: "string"}
+          - label: "Services"
+            name: "services"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Icon", name: "icon", widget: "string"}
+          - {label: "CTA Title", name: "cta_title", widget: "string"}
+          - {label: "CTA Description", name: "cta_description", widget: "text"}
+
+      - file: "content/pages/about.md"
+        label: "About Page"
+        name: "about"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "About Content", name: "body", widget: "markdown"}
+          - {label: "Profile Image", name: "profile_image", widget: "image"}
+          - label: "Skills"
+            name: "skills"
+            widget: "list"
+            fields:
+              - {label: "Skill Name", name: "name", widget: "string"}
+              - {label: "Percentage", name: "percentage", widget: "number"}
+          - label: "Experience"
+            name: "experience"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Company", name: "company", widget: "string"}
+              - {label: "Duration", name: "duration", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+
+      - file: "content/pages/contact.md"
+        label: "Contact Page"
+        name: "contact"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "Form Title", name: "form_title", widget: "string"}
+          - {label: "Form Description", name: "form_description", widget: "text"}
+          - {label: "Info Title", name: "info_title", widget: "string"}
+          - {label: "Info Description", name: "info_description", widget: "text"}
+          - {label: "Response Time", name: "response_time", widget: "string"}
+          - {label: "Availability", name: "availability", widget: "string"}
+          - label: "Process Steps"
+            name: "process_steps"
+            widget: "list"
+            fields:
+              - {label: "Step Number", name: "number", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+
+      - file: "content/pages/services.md"
+        label: "Services Page"
+        name: "services"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - label: "Main Services"
+            name: "main_services"
+            widget: "list"
+            fields:
+              - {label: "Service Name", name: "name", widget: "string"}
+              - {label: "Icon", name: "icon", widget: "string"}
+              - {label: "Price", name: "price", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Features", name: "features", widget: "list"}
+              - {label: "Featured", name: "featured", widget: "boolean", default: false}
+          - label: "Additional Services"
+            name: "additional_services"
+            widget: "list"
+            fields:
+              - {label: "Service Name", name: "name", widget: "string"}
+              - {label: "Icon", name: "icon", widget: "string"}
+              - {label: "Price", name: "price", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+
+  # Portfolio
+  - name: "portfolio"
+    label: "Portfolio Projects"
+    label_singular: "Portfolio Project"
+    folder: "content/portfolio"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} - {{category}}"
+    fields:
+      - {label: "Project Title", name: "title", widget: "string", hint: "Enter the project title"}
+      - {label: "Category", name: "category", widget: "select", options: ["branding", "digital", "print"], hint: "Select project category"}
+      - {label: "Featured Image", name: "image", widget: "image", hint: "Upload main project image"}
+      - {label: "Image Alt Text", name: "alt", widget: "string", hint: "Describe the image for accessibility"}
+      - {label: "Short Description", name: "description", widget: "text", hint: "Brief project description (1-2 sentences)"}
+      - {label: "Client Name", name: "client", widget: "string", required: false, hint: "Client or company name (optional)"}
+      - {label: "Project Date", name: "date", widget: "datetime", default: "{{now}}", hint: "When was this project completed?"}
+      - {label: "Project Details", name: "body", widget: "markdown", required: false, hint: "Detailed project description, process, and results"}
+      - label: "Additional Images"
+        name: "gallery"
+        widget: "list"
+        required: false
+        hint: "Add more project images"
+        fields:
+          - {label: "Image", name: "image", widget: "image"}
+          - {label: "Alt Text", name: "alt", widget: "string"}
+
+  # Pricing
+  - name: "pricing"
+    label: "Pricing"
+    files:
+      - file: "content/pages/pricing.md"
+        label: "Pricing Page"
+        name: "pricing"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - label: "Pricing Plans"
+            name: "plans"
+            widget: "list"
+            fields:
+              - {label: "Plan Name", name: "name", widget: "string"}
+              - {label: "Price", name: "price", widget: "string"}
+              - {label: "Duration", name: "duration", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Features", name: "features", widget: "list"}
+              - {label: "Popular", name: "popular", widget: "boolean", default: false}
+              - {label: "Button Text", name: "button_text", widget: "string"}
+
+  # FAQ
+  - name: "faq"
+    label: "FAQ"
+    files:
+      - file: "content/pages/faq.md"
+        label: "FAQ Page"
+        name: "faq"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - label: "FAQ Items"
+            name: "faqs"
+            widget: "list"
+            fields:
+              - {label: "Question", name: "question", widget: "string"}
+              - {label: "Answer", name: "answer", widget: "text"}
+
+  # Privacy Policy
+  - name: "privacy"
+    label: "Privacy Policy"
+    files:
+      - file: "content/pages/privacy-policy.md"
+        label: "Privacy Policy"
+        name: "privacy"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Last Updated", name: "last_updated", widget: "datetime"}
+          - {label: "Content", name: "body", widget: "markdown"}
